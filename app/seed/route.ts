@@ -33,6 +33,7 @@ async function seedUsers() {
       `;
 		}),
 	);
+	console.log("users inserted");
 
 	return insertedUsers;
 }
@@ -66,7 +67,7 @@ export async function GET() {
 		return Response.json({ message: "Database seeded successfully" });
 	} catch (error) {
 		return Response.json(
-			{ error: "An error occured in the database" },
+			{ error: "An error occurred in the database" },
 			{ status: 500 },
 		);
 	}
