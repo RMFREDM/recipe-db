@@ -1,17 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { gideon, inter } from "./ui/fonts";
 import "./globals.css";
-import { interFont } from "./ui/fonts";
-
-const geistSans = Geist({
-	variable: "--font-geist-sans",
-	subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
-	subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
 	title: {
@@ -23,8 +12,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
 	return (
-		<html lang="en" className={`h-full`}>
-			<body className={`${interFont} antialiased p-2`}>{children}</body>
+		<html
+			lang="en"
+			className={`h-full ${inter.variable} ${gideon.variable}`}
+		>
+			<body className={`font-sans antialiased p-2`}>{children}</body>
 		</html>
 	);
 }

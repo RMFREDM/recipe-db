@@ -1,10 +1,12 @@
 import { Inter, Gideon_Roman } from "next/font/google";
 
-export const inter = Inter({ subsets: ["latin"] });
-export const interFont = inter.className;
+export const inter = Inter({
+	variable: "--font-inter",
+	subsets: ["latin"],
+});
 
 export const gideon = Gideon_Roman({
+	variable: "--font-gideon",
 	weight: ["400"],
 	subsets: ["latin"],
 });
-export const gideonFont = gideon.className;

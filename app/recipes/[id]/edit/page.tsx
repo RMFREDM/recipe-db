@@ -1,4 +1,3 @@
-import { gideonFont } from "@/app/ui/fonts";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,5 +5,5 @@ export const metadata: Metadata = {
 };
 
 export default function page() {
-	return <h1 className={`${gideonFont} text-2xl`}>Edit Recipe Page</h1>;
+	return <h1 className={`font-serif text-2xl`}>Edit Recipe Page</h1>;
 }

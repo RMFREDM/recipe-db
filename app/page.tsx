@@ -4,7 +4,7 @@ import { gideonFont } from "./ui/fonts";
 export default function Home() {
 	return (
 		<div className="text-center">
-			<h1 className={`text-4xl ${gideonFont} p-5`}>Recipe Database</h1>
+			<h1 className={`text-4xl font-serif p-5`}>Recipe Database</h1>
 			<p className="p-1 m-4">
 				<strong>Welcome to Recipe DB!</strong> A site where you can
 				create and view a wide range of recipes
