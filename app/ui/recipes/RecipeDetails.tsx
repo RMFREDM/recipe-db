@@ -9,9 +9,18 @@ export default async function RecipeDetails(propParams: object) {
 	return (
 		<>
 			<h1 className={`font-serif text-2xl`}>{recipe.name}</h1>
-			<p>{recipe.ingredients}</p>
-			<p>{recipe.steps}</p>
-			<p>{creator}</p>
+			<div id="ingredients-section">
+				<h2 className={`font-serif text-xl`}>Ingredients</h2>
+				<p>{recipe.ingredients}</p>
+			</div>
+			<h2 className={`font-serif text-xl`}>instructions</h2>
+			<div id="instructions-section">
+				<p>{recipe.steps}</p>
+			</div>
+			<h2 className={`font-serif text-xl`}>Creator</h2>
+			<div id="creator-section">
+				<p>{creator}</p>
+			</div>
 		</>
 	);
 }
