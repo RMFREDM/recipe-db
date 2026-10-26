@@ -13,7 +13,6 @@ export default function page() {
 			<h1 className={`font-serif text-2xl`}>Recipes Page</h1>
 			<Suspense fallback={<RecipeListSkeleton />}>
 				<RecipeList />
-				{/* <RecipeListSkeleton /> */}
 			</Suspense>
 		</>
 	);

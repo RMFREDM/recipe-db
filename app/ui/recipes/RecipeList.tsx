@@ -3,7 +3,7 @@ import Link from "next/link";
 
 // return a list of all recipes
 export default async function RecipeList() {
-	const recipes = (await fetchRecipes()).recipes;
+	const recipes = await fetchRecipes();
 	console.log(recipes);
 
 	return (

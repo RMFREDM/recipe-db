@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { gideonFont } from "./ui/fonts";
 
 export default function Home() {
 	return (

@@ -1,4 +1,5 @@
 import postgres from "postgres";
+import { setTimeout } from "timers/promises";
 
 // define a constant to run sql queries
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
@@ -9,16 +10,12 @@ export async function fetchRecipes() {
 	let recipes;
 	try {
 		recipes = await sql`SELECT * FROM recipes`;
-	} catch (error) {
-		// log the error that occurred
-		console.log(error);
-		return {
-			message: "Database Error: Failed to get recipes",
-		};
-	}
 
-	// return the recipes
-	return {
-		recipes: recipes,
-	};
+		// return the recipes
+		return recipes;
+	} catch (error) {
+		// log and throw the error that occurred
+		console.log(error);
+		throw new Error("failed to fetch recipes: " + error);
+	}
 }
