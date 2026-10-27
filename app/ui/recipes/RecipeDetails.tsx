@@ -1,13 +1,12 @@
 import { fetchRecipeById, fetchUserNameById } from "@/app/lib/data";
+import useURLRecipe from "@/app/lib/useURLRecipe";
 import Link from "next/link";
 
-export default async function RecipeDetails(propParams: {
-	propParams: { params: Promise<{ id: string }> };
+export default async function RecipeDetails(props: {
+	props: { params: Promise<{ id: string }> };
 }) {
-	const params = await propParams.propParams.params;
-	const id = params.id;
-	const recipe = await fetchRecipeById(id);
-	const creator = await fetchUserNameById(recipe.userid);
+	// get the recipe being edited
+	const [recipe, creator] = await useURLRecipe(props);
 
 	return (
 		<>

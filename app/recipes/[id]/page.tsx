@@ -11,7 +11,7 @@ export default async function page(props: { params: Promise<{ id: string }> }) {
 	return (
 		<>
 			<Suspense fallback={<RecipeDetailsSkeleton />}>
-				<RecipeDetails propParams={props} />
+				<RecipeDetails props={props} />
 			</Suspense>
 		</>
 	);
