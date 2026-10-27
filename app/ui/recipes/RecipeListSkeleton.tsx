@@ -4,7 +4,7 @@ import Link from "next/link";
 // return a list of all recipes
 export default function RecipeListSkeleton() {
 	return (
-		<table id="recipe-table" className="border w-full">
+		<table id="recipe-table" className="border w-full mt-10">
 			<thead>
 				<tr className="text-left">
 					<th className="px-4 py-2" scope="col">
