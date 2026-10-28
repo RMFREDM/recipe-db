@@ -1,5 +1,4 @@
 import postgres from "postgres";
-import { setTimeout } from "timers/promises";
 
 // define a constant to run sql queries
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
