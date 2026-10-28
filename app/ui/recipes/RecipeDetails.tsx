@@ -1,4 +1,4 @@
-import { fetchRecipeById, fetchUserNameById } from "@/app/lib/data";
+import { Recipe, fetchRecipeById, fetchUserNameById } from "@/app/lib/data";
 import useURLRecipe from "@/app/lib/useURLRecipe";
 import Link from "next/link";
 

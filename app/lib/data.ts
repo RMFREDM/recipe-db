@@ -6,6 +6,15 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
 /* Recipe Section */
 
+// define a recipe type
+export type Recipe = {
+	id: string;
+	name: string;
+	ingredients: string;
+	steps: string;
+	userid: string;
+};
+
 // create a function that gets all recipes from the database
 export async function fetchRecipes() {
 	// define a variable to hold recipes and attempt to fetch them

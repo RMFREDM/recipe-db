@@ -1,19 +1,15 @@
-"use client";
-
-export default function RecipeNameInput(value: string | undefined = "asd") {
+export default function RecipeNameInput(name: { name: string }) {
 	return (
-		<>
-			<label htmlFor="name">Recipe Name</label>
+		<div id="name-div">
+			<label htmlFor="name-input" className="p-2">
+				Recipe Name
+			</label>
 			<input
 				type="text"
-				id="name"
-				value={value}
+				id="name-input"
+				defaultValue={name.name}
 				className="border rounded-lg"
-				onChange={(e) => {
-					e.preventDefault();
-					value = e.target.value;
-				}}
 			></input>
-		</>
+		</div>
 	);
 }
