@@ -1,3 +1,5 @@
+"use server";
+
 import { fetchRecipeById, fetchUserNameById } from "./data";
 
 export default async function useURLRecipe(props: {
