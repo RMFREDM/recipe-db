@@ -7,7 +7,7 @@ export default async function EditForm(props: {
 	props: { params: Promise<{ id: string }> };
 }) {
 	// get the recipe being edited
-	const [recipe] = await useURLRecipe(props);
+	const [recipe] = await useURLRecipe(props.props);
 
 	return (
 		<>
