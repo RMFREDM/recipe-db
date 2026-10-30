@@ -1,6 +1,6 @@
 "use server";
 
-import { fetchRecipeById, fetchUserNameById } from "./data";
+import { Recipe, fetchRecipeById, fetchUserNameById } from "./data";
 
 export default async function useURLRecipe(props: {
 	params: Promise<{ id: string }>;
@@ -10,7 +10,7 @@ export default async function useURLRecipe(props: {
 	const id = params.id;
 
 	// identify and return the recipe and its creator
-	const recipe = await fetchRecipeById(id);
+	const recipe = (await fetchRecipeById(id)) as Recipe;
 	const creator = await fetchUserNameById(recipe.userid);
 
 	return [recipe, creator];
