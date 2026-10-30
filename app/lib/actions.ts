@@ -3,6 +3,8 @@
 import postgres from "postgres";
 import { Recipe } from "./data";
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 // define a constant to run sql queries
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
@@ -36,13 +38,21 @@ const RecipeFormSchema = z.object({
 });
 
 // create a function that edits a recipe based on its id
-const EditRecipe = RecipeFormSchema.omit({ userId: true });
+const EditRecipe = RecipeFormSchema.omit({ id: true, userId: true });
 
 export async function editRecipe(
 	id: string,
 	prevState: RecipeState,
 	formData: FormData,
 ) {
+	console.log(
+		"formData: " +
+			formData.get("name") +
+			", " +
+			formData.get("ingredients") +
+			", " +
+			formData.get("steps"),
+	);
 	// validate the form data
 	const validatedRecipe = EditRecipe.safeParse({
 		name: formData.get("name"),
@@ -68,4 +78,8 @@ export async function editRecipe(
 		console.log(error);
 		return { message: "Failed to update the recipe: " + error };
 	}
+
+	// redirect the user to the recipes page
+	revalidatePath(`/recipes/${id}`);
+	redirect(`/recipes/${id}`);
 }

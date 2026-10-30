@@ -1,5 +1,6 @@
-export default function RecipeIngredientsInput(ingredients: {
+export default function RecipeIngredientsInput(props: {
 	ingredients: string;
+	handleChange: (newName: string) => void;
 }) {
 	return (
 		<div id="ingredients-div" className="flex">
@@ -8,7 +9,12 @@ export default function RecipeIngredientsInput(ingredients: {
 			</label>
 			<textarea
 				id="ingredients"
-				defaultValue={ingredients.ingredients}
+				name="ingredients"
+				value={props.ingredients}
+				onChange={(e) => {
+					e.preventDefault();
+					props.handleChange(e.target.value);
+				}}
 				className="border rounded-lg field-sizing-fixed w-100 p-1"
 			></textarea>
 		</div>
