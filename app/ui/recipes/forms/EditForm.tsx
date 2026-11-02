@@ -28,7 +28,7 @@ export default function EditForm(props: { recipe: Recipe }) {
 
 	// bind the editRecipe function with the id and set up the form state
 	const editRecipeWithId = editRecipe.bind(null, recipe.id);
-	const initialState: RecipeState = { message: null, errors: {} };
+	const initialState: RecipeState = { message: "", errors: {} };
 	const [state, formAction] = useActionState(editRecipeWithId, initialState);
 
 	return (

@@ -1,7 +1,6 @@
 "use server";
 
 import postgres from "postgres";
-import { Recipe } from "./data";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -14,11 +13,10 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 // define a RecipeState type for recipe form errors
 export type RecipeState = {
 	errors?: {
-		name?: string[];
-		ingredients?: string[];
-		steps?: string[];
-		userId?: string[];
-	};
+		name?: string[] | null;
+		ingredients?: string[] | null;
+		steps?: string[] | null;
+	} | null;
 	message?: string | null;
 };
 

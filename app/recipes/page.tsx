@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 	title: "Recipes",
 };
 
-export default function page() {
+export default function Page() {
 	return (
 		<>
 			<h1 className={`font-serif text-2xl mb-2`}>Recipes Page</h1>

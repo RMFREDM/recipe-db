@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 	title: "Edit Recipe",
 };
 
-export default async function page(props: { params: Promise<{ id: string }> }) {
+export default async function Page(props: { params: Promise<{ id: string }> }) {
 	// get the recipe being edited NEEDS TO BE MOVED OUT OF THIS COMPONENT
 	const recipe: Recipe = (await useURLRecipe(props))[0];
 	return (

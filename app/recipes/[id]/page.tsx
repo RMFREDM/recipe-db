@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 	title: "View Recipe",
 };
 
-export default async function page(props: { params: Promise<{ id: string }> }) {
+export default async function Page(props: { params: Promise<{ id: string }> }) {
 	return (
 		<>
 			<Suspense fallback={<RecipeDetailsSkeleton />}>
