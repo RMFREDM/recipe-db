@@ -1,4 +1,5 @@
 import postgres from "postgres";
+import type { User } from "@/app/lib/definitions";
 
 // define a constant to run sql queries
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
@@ -61,5 +62,18 @@ export async function fetchUserNameById(id: string) {
 		// log and throw the error that occurred
 		console.log(error);
 		throw new Error("Failed to fetch the user: " + error);
+	}
+}
+
+// create a function to get a user by their email
+export async function getUserByEmail(email: string): Promise<User | undefined> {
+	try {
+		const user = await sql<
+			User[]
+		>`SELECT * FROM users WHERE email=${email}`;
+		return user[0];
+	} catch (error) {
+		console.error("Failed to fetch user:", error);
+		throw new Error("Failed to fetch user.");
 	}
 }
