@@ -33,12 +33,6 @@ export default async function RecipeDetails(props: {
 					<p>This recipe was created by: {creator}</p>
 				</div>
 			</div>
-			<Link
-				href={"/recipes"}
-				className="bg-gray-300 active:bg-gray-500 border rounded-sm p-1 pr-2 pl-2 m-2"
-			>
-				Back to Recipe List
-			</Link>
 		</>
 	);
 }

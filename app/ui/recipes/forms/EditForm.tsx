@@ -64,7 +64,7 @@ export default function EditForm(props: { recipe: Recipe }) {
 					))}
 				<button
 					type="submit"
-					className="bg-gray-300 active:bg-gray-500 border rounded-sm w-fit p-0.25 pr-2 pl-2 m-2"
+					className="bg-gray-300 active:bg-gray-500 border rounded-sm w-fit p-0.25 pr-2 pl-2 m-2 cursor-pointer"
 				>
 					Submit
 				</button>
