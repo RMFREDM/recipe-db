@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
-import { getUserByEmail } from "./app/lib/data";
+import { fetchUserByEmail } from "./app/lib/data";
 import type { User } from "@/app/lib/definitions";
 
 // use bcrypt
@@ -26,7 +26,9 @@ export const { auth, signIn, signOut } = NextAuth({
 					const { email, password } = parsedCredentials.data;
 
 					// get the user based on the email
-					const user: User | undefined = await getUserByEmail(email);
+					const user: User | undefined = await fetchUserByEmail(
+						email,
+					);
 					if (!user) return null;
 
 					// validate the password
@@ -36,7 +38,6 @@ export const { auth, signIn, signOut } = NextAuth({
 					);
 					if (passwordsMatch) return user;
 				}
-
 				return null;
 			},
 		}),

@@ -66,7 +66,9 @@ export async function fetchUserNameById(id: string) {
 }
 
 // create a function to get a user by their email
-export async function getUserByEmail(email: string): Promise<User | undefined> {
+export async function fetchUserByEmail(
+	email: string,
+): Promise<User | undefined> {
 	try {
 		const user = await sql<
 			User[]

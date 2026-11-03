@@ -21,9 +21,19 @@ export default function LoginForm() {
 				className="grid grid-cols-1 grid-rows-3 gap-2 w-fit p-1 m-4"
 			>
 				<label htmlFor="email">Email</label>
-				<input type="email" id="email" className="border"></input>
+				<input
+					type="email"
+					id="email"
+					name="email"
+					className="border"
+				></input>
 				<label htmlFor="password">Password</label>
-				<input type="password" id="password" className="border"></input>
+				<input
+					type="password"
+					id="password"
+					name="password"
+					className="border"
+				></input>
 				<input type="hidden" name="redirectTo" value={callbackUrl} />
 				<button
 					type="submit"
