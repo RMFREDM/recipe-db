@@ -84,6 +84,63 @@ export async function editRecipe(
 	redirect(`/recipes/${id}`);
 }
 
+/* Users section */
+
+// define a form format for user forms
+const UserFormSchema = z.object({
+	id: z.string(),
+	name: z.string().trim().min(1, { error: "Name cannot be empty." }),
+	email: z.string().trim().min(1, { error: "Ingredients cannot be empty." }),
+	password: z.string().trim().min(1, { error: "Steps cannot be empty." }),
+});
+
+// create a function that edits a recipe based on its id
+const CreateUser = UserFormSchema.omit({ id: true });
+
+export async function createUser(
+	id: string,
+	prevState: RecipeState,
+	formData: FormData,
+) {
+	console.log(
+		"formData: " +
+			formData.get("name") +
+			", " +
+			formData.get("ingredients") +
+			", " +
+			formData.get("steps"),
+	);
+	// validate the form data
+	const validatedRecipe = EditRecipe.safeParse({
+		name: formData.get("name"),
+		ingredients: formData.get("ingredients"),
+		steps: formData.get("steps"),
+	});
+
+	// return errors early if validation fails
+	if (!validatedRecipe.success) {
+		return {
+			errors: validatedRecipe.error.flatten().fieldErrors,
+			message: "Failed to update the recipe: field errors",
+		};
+	}
+
+	const { name, ingredients, steps } = validatedRecipe.data;
+
+	// try to update the recipe
+	try {
+		// await sql`Update recipes SET name=${name}, ingredients=${ingredients}, steps=${steps} WHERE id=${id}`;
+	} catch (error) {
+		// log and throw the error that occurred
+		console.log(error);
+		return { message: "Failed to update the recipe: " + error };
+	}
+
+	// redirect the user to the recipes page
+	// revalidatePath(`/recipes/${id}`);
+	// redirect(`/recipes/${id}`);
+}
+
 /* Authentication Section */
 
 // define a function to authenticate the user

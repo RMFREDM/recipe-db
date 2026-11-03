@@ -8,13 +8,22 @@ export default function Home() {
 				<strong>Welcome to Recipe DB!</strong> A site where you can
 				create and view a wide range of recipes
 			</p>
-			<Link
-				href="/login"
-				id="login-link"
-				className="bg-gray-300 active:bg-gray-500 border rounded-sm p-1 pr-2 pl-2 m-2"
-			>
-				Log In
-			</Link>
+			<div id="account-links">
+				<Link
+					href="/login"
+					id="login-link"
+					className="bg-gray-300 active:bg-gray-500 border rounded-sm p-1 pr-2 pl-2 m-2"
+				>
+					Log In
+				</Link>
+				<Link
+					href="/create-account"
+					id="login-link"
+					className="bg-gray-300 active:bg-gray-500 border rounded-sm p-1 pr-2 pl-2 m-2"
+				>
+					Create Account
+				</Link>
+			</div>
 		</div>
 	);
 }
