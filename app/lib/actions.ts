@@ -10,6 +10,9 @@ import { AuthError } from "next-auth";
 // define a constant to run sql queries
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
+// use Bcrypt
+const bcrypt = require("bcrypt");
+
 /* Recipe Section */
 
 // define a RecipeState type for recipe form errors
@@ -86,59 +89,68 @@ export async function editRecipe(
 
 /* Users section */
 
+// define a UserState type for user form errors
+export type UserState = {
+	errors?: {
+		name?: string[] | null;
+		email?: string[] | null;
+		password?: string[] | null;
+	} | null;
+	message?: string | null;
+};
+
 // define a form format for user forms
 const UserFormSchema = z.object({
 	id: z.string(),
-	name: z.string().trim().min(1, { error: "Name cannot be empty." }),
-	email: z.string().trim().min(1, { error: "Ingredients cannot be empty." }),
-	password: z.string().trim().min(1, { error: "Steps cannot be empty." }),
+	name: z
+		.string({ error: "Name cannot be empty." })
+		.trim()
+		.min(1, { error: "Name cannot be empty." }),
+	email: z.string().trim().min(1, { error: "Email cannot be empty." }),
+	password: z
+		.string()
+		.trim()
+		.min(6, { error: "Password must contain at least 6 characters." }),
 });
 
 // create a function that edits a recipe based on its id
 const CreateUser = UserFormSchema.omit({ id: true });
 
-export async function createUser(
-	id: string,
-	prevState: RecipeState,
-	formData: FormData,
-) {
-	console.log(
-		"formData: " +
-			formData.get("name") +
-			", " +
-			formData.get("ingredients") +
-			", " +
-			formData.get("steps"),
-	);
+export async function createUser(prevState: RecipeState, formData: FormData) {
 	// validate the form data
-	const validatedRecipe = EditRecipe.safeParse({
+	const validatedRecipe = CreateUser.safeParse({
 		name: formData.get("name"),
-		ingredients: formData.get("ingredients"),
-		steps: formData.get("steps"),
+		email: formData.get("email"),
+		password: formData.get("password"),
 	});
 
 	// return errors early if validation fails
 	if (!validatedRecipe.success) {
 		return {
 			errors: validatedRecipe.error.flatten().fieldErrors,
-			message: "Failed to update the recipe: field errors",
+			message: "Failed to create the user: field errors",
 		};
 	}
 
-	const { name, ingredients, steps } = validatedRecipe.data;
+	// retrieve the form data and hash the password
+	const { name, email, password } = validatedRecipe.data;
+	const hashedPassword = await bcrypt.hash(password, 10);
+	console.log(`Name: ${name} Email: ${email}`);
 
-	// try to update the recipe
+	// try to create the user
 	try {
-		// await sql`Update recipes SET name=${name}, ingredients=${ingredients}, steps=${steps} WHERE id=${id}`;
+		await sql`INSERT INTO users (name, email, password)
+		VALUES (${name}, ${email}, ${hashedPassword})`;
+		console.log(`Created user: ${name}`);
 	} catch (error) {
 		// log and throw the error that occurred
 		console.log(error);
-		return { message: "Failed to update the recipe: " + error };
+		return { message: "Failed to create the user: " + error };
 	}
 
-	// redirect the user to the recipes page
-	// revalidatePath(`/recipes/${id}`);
-	// redirect(`/recipes/${id}`);
+	// redirect the user to the login page
+	revalidatePath(`/login`);
+	redirect(`/login`);
 }
 
 /* Authentication Section */
