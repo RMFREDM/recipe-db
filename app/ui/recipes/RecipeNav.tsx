@@ -1,7 +1,9 @@
 import { signOut } from "@/auth";
 import Link from "next/link";
+import ProfileDisplay from "../profile/ProfileDisplay";
+import { Suspense } from "react";
 
-export default function RecipeNav() {
+export default async function RecipeNav() {
 	return (
 		<div id="recipe-nav" className="flex justify-evenly w-full h-fit">
 			{/* Homepage Link */}
@@ -12,17 +14,9 @@ export default function RecipeNav() {
 				Recipe List
 			</Link>
 
-			{/* Log out button */}
-			<form
-				action={async () => {
-					"use server";
-					await signOut({ redirectTo: "/" });
-				}}
-			>
-				<button className="bg-gray-300 active:bg-gray-500 border rounded-sm p-1 pr-2 pl-2 m-2 cursor-pointer">
-					<div className="hidden md:block">Sign Out</div>
-				</button>
-			</form>
+			<Suspense>
+				<ProfileDisplay />
+			</Suspense>
 		</div>
 	);
 }
