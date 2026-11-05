@@ -1,6 +1,7 @@
 "use server";
 
-import { Recipe, fetchRecipeById, fetchUserNameById } from "./data";
+import { fetchRecipeById, fetchUserNameById } from "./data";
+import { Recipe } from "./definitions";
 
 export default async function useURLRecipe(props: {
 	params: Promise<{ id: string }>;

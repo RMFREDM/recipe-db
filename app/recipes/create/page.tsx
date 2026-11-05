@@ -1,3 +1,4 @@
+import CreateForm from "@/app/ui/recipes/forms/CreateForm";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -5,5 +6,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-	return <h1 className={`font-serif text-2xl`}>Create Recipe Page</h1>;
+	return <CreateForm />;
 }

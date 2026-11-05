@@ -5,7 +5,7 @@ import RecipeIngredientsInput from "./RecipeIngredientsInput";
 import RecipeStepsInput from "./RecipeSteps";
 import { RecipeState, editRecipe } from "@/app/lib/actions";
 import { useActionState, useState } from "react";
-import { Recipe } from "@/app/lib/data";
+import { Recipe } from "@/app/lib/definitions";
 
 export default function EditForm(props: { recipe: Recipe }) {
 	// get the recipe out of the props and use state to control the form values

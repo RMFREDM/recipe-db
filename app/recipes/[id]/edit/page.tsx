@@ -1,4 +1,4 @@
-import { Recipe } from "@/app/lib/data";
+import { Recipe } from "@/app/lib/definitions";
 import useURLRecipe from "@/app/lib/useURLRecipe";
 import EditForm from "@/app/ui/recipes/forms/EditForm";
 import { Metadata } from "next";
