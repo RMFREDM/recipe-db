@@ -21,6 +21,7 @@ export type RecipeState = {
 		name?: string[] | null;
 		ingredients?: string[] | null;
 		steps?: string[] | null;
+		userId?: string[] | null;
 	} | null;
 	message?: string | null;
 };
@@ -39,6 +40,55 @@ const RecipeFormSchema = z.object({
 		.trim()
 		.min(1, { error: "A user must be associated with this recipe." }),
 });
+
+// create a function that creates
+const CreateRecipe = RecipeFormSchema.omit({ id: true });
+
+export async function createRecipe(
+	userId: string,
+	prevState: RecipeState,
+	formData: FormData,
+) {
+	console.log(
+		"formData: " +
+			formData.get("name") +
+			", " +
+			formData.get("ingredients") +
+			", " +
+			formData.get("steps"),
+	);
+	// validate the form data
+	const validatedRecipe = CreateRecipe.safeParse({
+		name: formData.get("name"),
+		ingredients: formData.get("ingredients"),
+		steps: formData.get("steps"),
+	});
+
+	// return errors early if validation fails
+	if (!validatedRecipe.success) {
+		return {
+			errors: validatedRecipe.error.flatten().fieldErrors,
+			message: "Failed to create the recipe: field errors",
+		};
+	}
+
+	const { name, ingredients, steps } = validatedRecipe.data;
+
+	// try to create the recipe
+	try {
+		await sql`Insert INTO recipes (name, ingredients, steps, userid)
+		VALUES (${name}, ${ingredients}, ${steps}, ${userId})`;
+		console.log(`Created Recipe: ${name}`);
+	} catch (error) {
+		// log and throw the error that occurred
+		console.log(error);
+		return { message: "Failed to create the recipe: " + error };
+	}
+
+	// redirect the user to the recipes list
+	revalidatePath(`/recipes`);
+	redirect(`/recipes`);
+}
 
 // create a function that edits a recipe based on its id
 const EditRecipe = RecipeFormSchema.omit({ id: true, userId: true });

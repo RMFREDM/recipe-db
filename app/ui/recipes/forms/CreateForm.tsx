@@ -3,11 +3,12 @@
 import RecipeNameInput from "./RecipeNameInput";
 import RecipeIngredientsInput from "./RecipeIngredientsInput";
 import RecipeStepsInput from "./RecipeSteps";
-import { RecipeState, editRecipe } from "@/app/lib/actions";
+import { RecipeState, createRecipe, editRecipe } from "@/app/lib/actions";
 import { useActionState, useState } from "react";
-import { Recipe } from "@/app/lib/definitions";
 
-export default function CreateForm() {
+export default function CreateForm(props: {
+	userId: null | string | undefined;
+}) {
 	// use state to control the form values
 	const [name, setName] = useState("");
 	function handleNameChange(newName: string) {
@@ -24,15 +25,21 @@ export default function CreateForm() {
 		setSteps(newSteps);
 	}
 
-	// bind the editRecipe function with the id and set up the form state
-	const editRecipeWithId = editRecipe.bind(null, "a");
+	// set up the form state and formAction
+	const createRecipeWithUserId = createRecipe.bind(
+		null,
+		props.userId as string,
+	);
 	const initialState: RecipeState = { message: "", errors: {} };
-	const [state, formAction] = useActionState(editRecipeWithId, initialState);
+	const [state, formAction] = useActionState(
+		createRecipeWithUserId,
+		initialState,
+	);
 
 	return (
 		<>
 			<h1 className={`font-serif text-2xl`}>Create Recipe</h1>
-			<form className="flex flex-col w-fit gap-5 p-5">
+			<form action={formAction} className="flex flex-col w-fit gap-5 p-5">
 				<RecipeNameInput name={name} handleChange={handleNameChange} />
 				{state.errors?.name &&
 					state.errors.name.map((error: string) => (
@@ -66,6 +73,20 @@ export default function CreateForm() {
 				>
 					Submit
 				</button>
+				{state.errors?.userId &&
+					state.errors.userId.map((error: string) => (
+						<p className="mt-2 text-sm text-red-500" key={error}>
+							{error}
+						</p>
+					))}
+				{state.message && (
+					<p
+						className="mt-2 text-sm text-red-500"
+						key={state.message}
+					>
+						{state.message}
+					</p>
+				)}
 			</form>
 		</>
 	);
