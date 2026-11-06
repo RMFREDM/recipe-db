@@ -4,9 +4,9 @@ import postgres from "postgres";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { auth, signIn } from "@/auth";
+import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
-import { fetchUserByEmail } from "./data";
+import useUserId from "./useUserId";
 
 // define a constant to run sql queries
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
@@ -45,16 +45,14 @@ const RecipeFormSchema = z.object({
 const CreateRecipe = RecipeFormSchema.omit({ id: true, userId: true });
 
 export async function createRecipe(prevState: RecipeState, formData: FormData) {
-	// get the current users id
-	const session = await auth();
-	const user = await fetchUserByEmail(session?.user?.email as string);
-	if (!user) {
+	// get the current user's id
+	const userId = await useUserId();
+	if (!userId) {
 		return {
 			message:
 				"Failed to create the recipe: a user must be associated with this recipe.",
 		};
 	}
-	const userId = user.id;
 
 	// validate the form data
 	const validatedRecipe = CreateRecipe.safeParse({
