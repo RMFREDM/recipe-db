@@ -45,7 +45,7 @@ const RecipeFormSchema = z.object({
 const CreateRecipe = RecipeFormSchema.omit({ id: true, userId: true });
 
 export async function createRecipe(prevState: RecipeState, formData: FormData) {
-	// get the current user's id
+	// validate the user
 	const userId = await useUserId();
 	if (!userId) {
 		return {
@@ -95,6 +95,15 @@ export async function editRecipe(
 	prevState: RecipeState,
 	formData: FormData,
 ) {
+	// validate the user
+	const userId = await useUserId();
+	if (!userId) {
+		return {
+			message:
+				"Failed to update the recipe: recipes can only be updated by their creator.",
+		};
+	}
+
 	console.log(
 		"formData: " +
 			formData.get("name") +
@@ -132,6 +141,31 @@ export async function editRecipe(
 	// redirect the user to the recipes page
 	revalidatePath(`/recipes/${id}`);
 	redirect(`/recipes/${id}`);
+}
+
+// create a function that deletes a recipe based on its id
+export async function deleteRecipe(id: string) {
+	// validate the user
+	const userId = await useUserId();
+	if (!userId) {
+		return {
+			message:
+				"Failed to delete the recipe: recipes can only be deleted by their creator.",
+		};
+	}
+
+	// try to delete the recipe
+	try {
+		await sql`DELETE FROM recipes WHERE id=${id}`;
+	} catch (error) {
+		// log and throw the error that occurred
+		console.log(error);
+		return { message: "Failed to delete the recipe: " + error };
+	}
+
+	// redirect the user to the recipe list page
+	revalidatePath(`/recipes`);
+	redirect(`/recipes`);
 }
 
 /* Users section */

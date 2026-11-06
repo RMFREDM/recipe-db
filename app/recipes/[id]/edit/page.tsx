@@ -3,7 +3,6 @@ import useURLRecipe from "@/app/lib/useURLRecipe";
 import useUserId from "@/app/lib/useUserId";
 import EditForm from "@/app/ui/recipes/forms/EditForm";
 import { Metadata } from "next";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
