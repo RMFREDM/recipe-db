@@ -1,6 +1,7 @@
 import { fetchRecipes } from "@/app/lib/data";
 import useUserId from "@/app/lib/useUserId";
 import Link from "next/link";
+import DeleteButton from "./forms/DeleteButton";
 
 // return a list of all recipes
 export default async function RecipeList() {
@@ -51,9 +52,7 @@ export default async function RecipeList() {
 									>
 										Edit
 									</Link>
-									<button className="bg-gray-300 active:bg-gray-500 border rounded-sm p-0.25 pr-2 pl-2 m-1 cursor-pointer">
-										Delete
-									</button>
+									<DeleteButton recipeId={recipe.id} />
 								</>
 							)}
 						</td>

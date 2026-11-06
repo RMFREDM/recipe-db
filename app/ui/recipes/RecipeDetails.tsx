@@ -1,5 +1,4 @@
 import useURLRecipe from "@/app/lib/useURLRecipe";
-import Link from "next/link";
 
 export default async function RecipeDetails(props: {
 	props: { params: Promise<{ id: string }> };
