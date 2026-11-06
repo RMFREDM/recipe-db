@@ -4,8 +4,9 @@ import postgres from "postgres";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { signIn } from "@/auth";
+import { auth, signIn } from "@/auth";
 import { AuthError } from "next-auth";
+import { fetchUserByEmail } from "./data";
 
 // define a constant to run sql queries
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
@@ -21,7 +22,6 @@ export type RecipeState = {
 		name?: string[] | null;
 		ingredients?: string[] | null;
 		steps?: string[] | null;
-		userId?: string[] | null;
 	} | null;
 	message?: string | null;
 };
@@ -42,21 +42,20 @@ const RecipeFormSchema = z.object({
 });
 
 // create a function that creates
-const CreateRecipe = RecipeFormSchema.omit({ id: true });
+const CreateRecipe = RecipeFormSchema.omit({ id: true, userId: true });
 
-export async function createRecipe(
-	userId: string,
-	prevState: RecipeState,
-	formData: FormData,
-) {
-	console.log(
-		"formData: " +
-			formData.get("name") +
-			", " +
-			formData.get("ingredients") +
-			", " +
-			formData.get("steps"),
-	);
+export async function createRecipe(prevState: RecipeState, formData: FormData) {
+	// get the current users id
+	const session = await auth();
+	const user = await fetchUserByEmail(session?.user?.email as string);
+	if (!user) {
+		return {
+			message:
+				"Failed to create the recipe: a user must be associated with this recipe.",
+		};
+	}
+	const userId = user.id;
+
 	// validate the form data
 	const validatedRecipe = CreateRecipe.safeParse({
 		name: formData.get("name"),

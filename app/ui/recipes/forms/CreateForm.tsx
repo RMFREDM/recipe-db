@@ -3,12 +3,10 @@
 import RecipeNameInput from "./RecipeNameInput";
 import RecipeIngredientsInput from "./RecipeIngredientsInput";
 import RecipeStepsInput from "./RecipeSteps";
-import { RecipeState, createRecipe, editRecipe } from "@/app/lib/actions";
+import { RecipeState, createRecipe } from "@/app/lib/actions";
 import { useActionState, useState } from "react";
 
-export default function CreateForm(props: {
-	userId: null | string | undefined;
-}) {
+export default function CreateForm() {
 	// use state to control the form values
 	const [name, setName] = useState("");
 	function handleNameChange(newName: string) {
@@ -26,15 +24,8 @@ export default function CreateForm(props: {
 	}
 
 	// set up the form state and formAction
-	const createRecipeWithUserId = createRecipe.bind(
-		null,
-		props.userId as string,
-	);
 	const initialState: RecipeState = { message: "", errors: {} };
-	const [state, formAction] = useActionState(
-		createRecipeWithUserId,
-		initialState,
-	);
+	const [state, formAction] = useActionState(createRecipe, initialState);
 
 	return (
 		<>
@@ -73,12 +64,6 @@ export default function CreateForm(props: {
 				>
 					Submit
 				</button>
-				{state.errors?.userId &&
-					state.errors.userId.map((error: string) => (
-						<p className="mt-2 text-sm text-red-500" key={error}>
-							{error}
-						</p>
-					))}
 				{state.message && (
 					<p
 						className="mt-2 text-sm text-red-500"
