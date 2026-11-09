@@ -16,7 +16,12 @@ export default async function RecipeDetails(props: {
 	return (
 		<>
 			<h1 className={`font-serif text-2xl`}>{recipe.name}</h1>
-			<Image src="/placeholder.jpg" width={500} height={50} alt="An image of the recipe" />
+			<Image
+				src="/recipePlaceholder.JPG"
+				width={434}
+				height={24}
+				alt="An image of the recipe"
+			/>
 			<div
 				id="recipe-info"
 				className=" flex flex-col justify-between gap-5 h-fit w-fit p-5"
