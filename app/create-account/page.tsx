@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { Suspense } from "react";
 import Link from "next/link";
 import AccountCreationForm from "../ui/create-account/AccountCreationForm";
 
@@ -26,9 +25,7 @@ export default function Page() {
 				</Link>
 				!
 			</p>
-			<Suspense>
-				<AccountCreationForm />
-			</Suspense>
+			<AccountCreationForm />
 		</>
 	);
 }

@@ -15,11 +15,8 @@ export default function Page() {
 			>
 				Login Page
 			</h1>
-			<Suspense>
-				<LoginForm />
-			</Suspense>
 			<p className="flex justify-center">
-				Don't have an account? Try{" "}
+				Don{"'"}t have an account? Try{" "}
 				<Link
 					href="/create-account"
 					id="account-creation-link"
@@ -29,6 +26,9 @@ export default function Page() {
 				</Link>
 				!
 			</p>
+			<Suspense>
+				<LoginForm />
+			</Suspense>
 		</>
 	);
 }

@@ -1,5 +1,5 @@
-import useURLRecipe from "@/app/lib/useURLRecipe";
-import useUserId from "@/app/lib/useUserId";
+import getURLRecipe from "@/app/lib/getURLRecipe";
+import getUserId from "@/app/lib/getUserId";
 import Link from "next/link";
 import DeleteButton from "./forms/DeleteButton";
 
@@ -7,10 +7,10 @@ export default async function RecipeDetails(props: {
 	props: { params: Promise<{ id: string }> };
 }) {
 	// get the recipe being edited
-	const [recipe, creator] = await useURLRecipe(props.props);
+	const [recipe, creator] = await getURLRecipe(props.props);
 
 	// get the user's id
-	const userId = await useUserId();
+	const userId = await getUserId();
 
 	return (
 		<>

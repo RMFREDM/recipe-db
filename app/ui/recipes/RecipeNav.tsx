@@ -1,4 +1,3 @@
-import { signOut } from "@/auth";
 import Link from "next/link";
 import ProfileDisplay from "../profile/ProfileDisplay";
 import { Suspense } from "react";

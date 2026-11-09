@@ -4,9 +4,7 @@ import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 import { fetchUserByEmail } from "./app/lib/data";
 import type { User } from "@/app/lib/definitions";
-
-// use bcrypt
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
 
 export const { auth, signIn, signOut } = NextAuth({
 	...authConfig,
