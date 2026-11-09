@@ -1,6 +1,3 @@
-import { fetchRecipes } from "@/app/lib/data";
-import Link from "next/link";
-
 // return a list of all recipes
 export default function RecipeListSkeleton() {
 	return (

@@ -6,13 +6,11 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
-import useUserId from "./useUserId";
+import getUserId from "./getUserId";
+import bcrypt from "bcrypt";
 
 // define a constant to run sql queries
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
-
-// use Bcrypt
-const bcrypt = require("bcrypt");
 
 /* Recipe Section */
 
@@ -46,7 +44,7 @@ const CreateRecipe = RecipeFormSchema.omit({ id: true, userId: true });
 
 export async function createRecipe(prevState: RecipeState, formData: FormData) {
 	// validate the user
-	const userId = await useUserId();
+	const userId = await getUserId();
 	if (!userId) {
 		return {
 			message:
@@ -96,7 +94,7 @@ export async function editRecipe(
 	formData: FormData,
 ) {
 	// validate the user
-	const userId = await useUserId();
+	const userId = await getUserId();
 	if (!userId) {
 		return {
 			message:
@@ -146,7 +144,7 @@ export async function editRecipe(
 // create a function that deletes a recipe based on its id
 export async function deleteRecipe(id: string) {
 	// validate the user
-	const userId = await useUserId();
+	const userId = await getUserId();
 	if (!userId) {
 		return {
 			message:

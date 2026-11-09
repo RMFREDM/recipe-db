@@ -17,7 +17,7 @@ export default async function ProfileDisplay() {
 				}}
 			>
 				<button className="bg-gray-300 active:bg-gray-500 border rounded-sm p-1 pr-2 pl-2 m-2 cursor-pointer">
-					<div className="hidden md:block">Sign Out</div>
+					Sign Out
 				</button>
 			</form>
 		</div>

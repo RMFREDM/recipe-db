@@ -3,7 +3,7 @@
 import { fetchRecipeById, fetchUserNameById } from "./data";
 import { Recipe } from "./definitions";
 
-export default async function useURLRecipe(props: {
+export default async function getURLRecipe(props: {
 	params: Promise<{ id: string }>;
 }) {
 	// await the url params promise and get the id

@@ -1,7 +1,3 @@
-import RecipeNameInput from "./RecipeNameInput";
-import RecipeIngredientsInput from "./RecipeIngredientsInput";
-import RecipeStepsInput from "./RecipeSteps";
-
 export default function EditFormSkeleton() {
 	return (
 		<>
