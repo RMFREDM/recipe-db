@@ -9,10 +9,8 @@ export const metadata: Metadata = {
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
 	return (
-		<>
-			<Suspense fallback={<RecipeDetailsSkeleton />}>
-				<RecipeDetails props={props} />
-			</Suspense>
-		</>
+		<Suspense fallback={<RecipeDetailsSkeleton />}>
+			<RecipeDetails props={props} />
+		</Suspense>
 	);
 }

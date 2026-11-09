@@ -2,6 +2,7 @@ import getURLRecipe from "@/app/lib/getURLRecipe";
 import getUserId from "@/app/lib/getUserId";
 import Link from "next/link";
 import DeleteButton from "./forms/DeleteButton";
+import Image from "next/image";
 
 export default async function RecipeDetails(props: {
 	props: { params: Promise<{ id: string }> };
@@ -15,6 +16,7 @@ export default async function RecipeDetails(props: {
 	return (
 		<>
 			<h1 className={`font-serif text-2xl`}>{recipe.name}</h1>
+			<Image src="/placeholder.jpg" width={500} height={50} alt="An image of the recipe" />
 			<div
 				id="recipe-info"
 				className=" flex flex-col justify-between gap-5 h-fit w-fit p-5"
